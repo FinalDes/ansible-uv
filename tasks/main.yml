@@ -1,0 +1,49 @@
+---
+- name: Ensure prerequisites are installed
+  ansible.builtin.package:
+    name:
+      - curl
+      - tar
+    state: present
+
+- name: Detect architecture
+  ansible.builtin.set_fact:
+    uv_arch: "{{ uv_arch_map[ansible_architecture] | default('x86_64-unknown-linux-gnu') }}"
+    uv_archive: "{{ uv_archive_map[uv_arch_map[ansible_architecture] | default('x86_64-unknown-linux-gnu')] | default('uv-x86_64-unknown-linux-gnu.tar.gz') }}"
+
+- name: Create install directory
+  ansible.builtin.file:
+    path: "{{ uv_install_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Download uv release archive
+  ansible.builtin.get_url:
+    url: "https://github.com/{{ uv_owner }}/{{ uv_repo }}/releases/download/{{ uv_version }}/{{ uv_archive }}"
+    dest: "/tmp/{{ uv_archive }}"
+    mode: "0644"
+
+- name: Extract uv binaries
+  ansible.builtin.unarchive:
+    src: "/tmp/{{ uv_archive }}"
+    dest: "{{ uv_install_dir }}"
+    remote_src: true
+    extra_opts: ["--strip-components=1"]
+
+- name: Ensure uv binaries are executable
+  ansible.builtin.file:
+    path: "{{ uv_install_dir }}/uv"
+    mode: "0755"
+  when: ansible_architecture != 'x86_64' or ansible_architecture != 'i686'
+
+- name: Add install dir to PATH in .profile
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.profile"
+    line: 'export PATH="{{ uv_install_dir }}:$PATH"'
+    insertafter: EOF
+    state: present
+
+- name: Clean up archive
+  ansible.builtin.file:
+    path: "/tmp/{{ uv_archive }}"
+    state: absent
