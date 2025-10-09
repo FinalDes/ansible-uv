@@ -41,11 +41,14 @@
     remote_src: true
     extra_opts: ["--strip-components=1"]
 
-- name: Ensure uv binaries are executable
+- name: Ensure uv and uvx binaries are executable
   ansible.builtin.file:
-    path: "{{ uv_install_dir }}/uv"
+    path: "{{ uv_install_dir }}/{{ item }}"
     mode: "0755"
-  when: ansible_architecture != 'x86_64' or ansible_architecture != 'i686'
+  loop:
+    - uv
+    - uvx
+  when: ansible_architecture in ['x86_64', 'aarch64', 'armv7l', 'i686']
 
 - name: Add install dir to PATH in .profile
   ansible.builtin.lineinfile:
@@ -61,3 +64,7 @@
   loop:
     - "/tmp/{{ uv_archive }}"
     - "/tmp/{{ uv_archive }}.sha256"
+
+# import completions task here
+- name: Import completion tasks
+  ansible.builtin.include_tasks: completion.yml
