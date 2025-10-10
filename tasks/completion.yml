@@ -1,29 +1,21 @@
-- name: Generate uv zsh completions
-  ansible.builtin.command:
-    cmd: "{{ uv_install_dir }}/uv generate-shell-completion zsh"
-  register: uv_zsh_completion
-  changed_when: false
-
-- name: Generate uvx zsh completions
-  ansible.builtin.command:
-    cmd: "{{ uv_install_dir }}/uvx generate-shell-completion zsh"
-  register: uvx_zsh_completion
-  changed_when: false
-
 - name: Ensure completions directory exists
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/completions"
     state: directory
     mode: "0755"
 
-- name: Store uv zsh completions
-  ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/completions/_uv"
-    content: "{{ uv_zsh_completion.stdout }}"
-    mode: "0644"
+- name: Generate uv and uvx zsh completions
+  ansible.builtin.command:
+    cmd: "{{ uv_install_dir }}/{{ item }} generate-shell-completion zsh"
+  register: completion_results
+  changed_when: false
+  loop:
+    - uv
+    - uvx
 
-- name: Store uvx zsh completions
+- name: Store uv and uvx zsh completions
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/completions/_uvx"
-    content: "{{ uvx_zsh_completion.stdout }}"
+    dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/completions/_{{ item.item }}"
+    content: "{{ item.stdout }}"
     mode: "0644"
+  loop: "{{ completion_results.results }}"
