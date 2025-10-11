@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "**/.github/workflows/*.yml": "github-actions-workflow",
+    "**/.github/workflows/*.yaml": "github-actions-workflow",
+    "*.yml": "ansible",
+    "*.yaml": "ansible"
+  }
+}

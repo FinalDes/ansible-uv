@@ -1,0 +1,26 @@
+name: Ansible Lint for Galaxy Role
+
+on:
+  pull_request:
+    branches:
+      - "main"
+  push:
+    branches:
+      - "main"
+
+jobs:
+  lint:
+    name: Ansible Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint@v6.21.0  # Use a stable version, check for latest at github.com/ansible/ansible-lint/releases
+        with:
+          working_directory: "."  # Root of the role (where tasks/, defaults/, etc. are)
+          args: "--profile=production"  # Enforce stricter rules suitable for Galaxy
+          setup_python: "true"  # Ensures Python is set up
+          requirements_file: "meta/requirements.yml"  # If your role depends on collections
