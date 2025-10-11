@@ -1,3 +1,5 @@
+# documentation only
+# only to record how is use offcial ansible lint github action to check linting
 name: Ansible Lint for Galaxy Role
 
 on:
