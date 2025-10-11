@@ -21,7 +21,10 @@ jobs:
         with:
           python-version-file: ".python-version"
           # activate-environment: true
-          # enable-cache: true
+          enable-cache: true
 
       - name: Check uv.lock sync
         run: uv sync --check
+
+      - name: Minimize uv cache
+        run: uv cache prune --ci
