@@ -14,17 +14,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Read python version from file
+        id: get-python-version
+        run: echo "python_version=$(cat .python-version)" >> $GITHUB_OUTPUT
 
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
-          python-version-file: ".python-version"
+          python-version: ${{ steps.get-python-version.outputs.python_version }}
           # activate-environment: true
           # enable-cache: true
 
       - name: Check uv.lock sync
         run: uv sync --locked
+
+      - name: ansible-lint
+        run: uv run ansible-lint .
 
       - name: Minimize uv cache
         run: uv cache prune --ci
