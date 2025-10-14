@@ -2,6 +2,8 @@
   "files.associations": {
     "**/.github/workflows/*.yml": "github-actions-workflow",
     "**/.github/workflows/*.yaml": "github-actions-workflow",
+    "**/.vscode/settings.json": "jsonc",
+    "**/.vscode/settings.template.json": "jsonc",
     "*.yml": "ansible",
     "*.yaml": "ansible"
   }
