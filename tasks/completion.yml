@@ -1,3 +1,4 @@
+---
 - name: Check if completions directory exists
   ansible.builtin.stat:
     path: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/completions"
