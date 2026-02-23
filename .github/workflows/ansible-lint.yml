@@ -25,4 +25,4 @@ jobs:
           working_directory: "" # Root of the role (where tasks/, defaults/, etc. are)
           setup_python: "true" # Ensures Python is set up
           python_version: "3.14" # Specify Python version if needed
-          # requirements_file: "meta/requirements.yml" # If your role depends on collections
+          requirements_file: "requirements.yml" # If your role depends on collections
