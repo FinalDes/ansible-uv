@@ -30,6 +30,7 @@
   roles:
     - name: Install uv
       role: uv
+      uv_skip_cleanup: true
   # tasks:
   #   - name: Check uname
   #     ansible.builtin.raw: uname -a
