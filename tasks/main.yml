@@ -6,7 +6,7 @@
       - curl
       - tar
     state: present
-    update_cache: yes
+    update_cache: true
 
 - name: Detect architecture
   ansible.builtin.set_fact:
