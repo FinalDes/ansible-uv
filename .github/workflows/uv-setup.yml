@@ -22,7 +22,7 @@ jobs:
         run: echo "python_version=$(cat .python-version)" >> "$GITHUB_OUTPUT"
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ steps.get-python-version.outputs.python_version }}
           # activate-environment: true
