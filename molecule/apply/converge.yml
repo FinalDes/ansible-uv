@@ -14,5 +14,5 @@
           - "env"
   roles:
     - name: Install uv
-      role: uv
+      role: ansible-uv
       uv_skip_cleanup: true

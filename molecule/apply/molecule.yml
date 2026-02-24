@@ -8,7 +8,6 @@ dependency:
     role-file: requirements.yml
     requirements-file: requirements.yml
 
-
 ansible:
   cfg:
     defaults:
@@ -17,6 +16,7 @@ ansible:
     ssh_connection:
       pipelining: true
   env:
+    ANSIBLE_ROLES_PATH: ./../../../
     ANSIBLE_FORCE_COLOR: "1"
     ANSIBLE_LOAD_CALLBACK_PLUGINS: "1"
 
