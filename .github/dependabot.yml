@@ -4,9 +4,4 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/" # Root directory
     schedule:
-      interval: "weekly"
-    allow:
-      - dependency-type: "all"
-        update-types:
-          - "version-update:semver-minor"
-          - "version-update:semver-patch"
+      interval: "daily" # "weekly" "monthly" if you want less frequent reminders
