@@ -5,3 +5,12 @@ updates:
     directory: "/" # Root directory
     schedule:
       interval: "daily" # "weekly" "monthly" if you want less frequent reminders
+  - package-ecosystem: "uv"
+    directory: "/" # Root directory
+    schedule:
+      interval: "daily" # "weekly" "monthly" if you want less frequent reminders
+    allow:
+      dependency-type: "all"
+      update-types: 
+        - "version-update:semver-patch"
+        - "version-update:semver-minor"
