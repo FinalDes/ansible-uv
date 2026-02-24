@@ -6,9 +6,23 @@ on:
   pull_request:
     branches:
       - "main"
+    paths-ignore:
+      - ".github/**"
+      - ".vscode/**"
+      - "README.md"
+      - .gitignore
+      - pyproject.toml
+      - uv.lock
   push:
     branches:
       - "main"
+    paths-ignore:
+      - ".github/**"
+      - ".vscode/**"
+      - "README.md"
+      - .gitignore
+      - pyproject.toml
+      - uv.lock
 
 jobs:
   ansible-lint:

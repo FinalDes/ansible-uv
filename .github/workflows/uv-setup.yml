@@ -4,9 +4,19 @@ on:
   pull_request:
     branches:
       - "main"
+    paths-ignore:
+      - ".github/**"
+      - ".vscode/**"
+      - "README.md"
+      - .gitignore
   push:
     branches:
       - "main"
+    paths-ignore:
+      - ".github/**"
+      - ".vscode/**"
+      - "README.md"
+      - .gitignore
 
 jobs:
   uv:
